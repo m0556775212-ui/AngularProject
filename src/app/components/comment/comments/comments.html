@@ -1,0 +1,34 @@
+<div class="comments-container">
+  <mat-card class="comments-card">
+    <mat-card-header>
+      <mat-card-title>Comments for Task</mat-card-title>
+      <mat-card-subtitle>Manage discussion</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      @if (comments$(); as comments) {
+        @if (comments.length > 0) {
+          <mat-list>
+            @for(comment of comments; track $index) {
+              <mat-list-item>
+                <mat-icon matListItemIcon>comment</mat-icon>
+                <div matListItemTitle>{{ comment.body }}</div>
+                <div matListItemLine class="meta">
+                   <small class="user-id">User: {{ comment.userId }}</small>
+                   <small class="date" *ngIf="comment.createdAt">{{ comment.createdAt | date:'short' }}</small>
+                </div>
+              </mat-list-item>
+            }
+          </mat-list>
+        } @else {
+          <p class="no-comments">No comments yet.</p>
+        }
+      }
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" [routerLink]="['/add-comment', taskId]">
+        <mat-icon>add_comment</mat-icon> Add Comment
+      </button>
+      <button mat-button routerLink="/tasks">Back to Tasks</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

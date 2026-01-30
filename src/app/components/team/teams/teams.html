@@ -1,0 +1,43 @@
+<div class="teams-container page-layout">
+  <div class="header-action-bar">
+    <div class="title-section">
+      <h2>Teams</h2>
+      <p class="subtitle">Manage your team members and collaborations</p>
+    </div>
+    <button mat-flat-button color="primary" routerLink="/add-team">
+      <mat-icon>add</mat-icon> New Team
+    </button>
+  </div>
+  
+  <div class="teams-grid">
+    @for(team of teams(); track team.id){
+      <mat-card class="team-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image">
+            <mat-icon>group</mat-icon>
+          </div>
+          <mat-card-title>{{ team.name }}</mat-card-title>
+          <mat-card-subtitle>ID: {{ team.id }}</mat-card-subtitle>
+        </mat-card-header>
+        
+        <mat-card-content>
+          <!-- Members list hidden as requested -->
+        </mat-card-content>
+        
+        <mat-card-actions>
+          @if (isOwner(team)) {
+            <button mat-stroked-button color="primary" [routerLink]="['/addMemberToTeam', team.id]">
+              <mat-icon>person_add</mat-icon> Add Member
+            </button>
+          }
+        </mat-card-actions>
+      </mat-card>
+    } @empty {
+      <div class="no-teams">
+        <mat-icon>info</mat-icon>
+        <p>No teams available.</p>
+        <button mat-raised-button color="primary" routerLink="/add-team">Create Team</button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="projects-container page-layout">
+  <div class="header-action-bar">
+    <div class="title-section">
+      <h2>Projects</h2>
+      <p class="subtitle">Track and manage your ongoing projects</p>
+    </div>
+    <button mat-flat-button color="primary" routerLink="/add-project">
+      <mat-icon>add</mat-icon> New Project
+    </button>
+  </div>
+
+  <div class="projects-grid">
+    @for(project of projects(); track project.id){
+      <mat-card class="project-card">
+        <mat-card-header>
+          <div mat-card-avatar class="project-avatar">
+            <mat-icon>assignment</mat-icon>
+          </div>
+          <mat-card-title>{{ project.name }}</mat-card-title>
+          <mat-card-subtitle>{{ project.description }}</mat-card-subtitle>
+        </mat-card-header>
+        
+        <mat-card-content>
+          <div class="status-section">
+            <mat-chip-set aria-label="Project Selection">
+                <mat-chip>{{ project.status }}</mat-chip>
+            </mat-chip-set>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    } @empty {
+      <div class="no-projects">
+          <mat-icon>folder_open</mat-icon>
+          <p>No projects found.</p>
+          <button mat-raised-button color="primary" routerLink="/add-project">Create Project</button>
+      </div>
+    }
+  </div>
+</div>

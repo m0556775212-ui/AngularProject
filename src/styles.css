@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #f5f5f5; }
+html, body { height: 100%; }
+
+/* Shared Page Layout Styles */
+.page-layout {
+  padding: 24px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  background: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.title-section h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.title-section .subtitle {
+  margin: 4px 0 0;
+  color: #666;
+  font-size: 14px;
+}

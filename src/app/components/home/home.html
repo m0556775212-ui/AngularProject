@@ -1,0 +1,60 @@
+<div class="home-container">
+  <div class="hero-section">
+    <h1>Welcome to Project Manager</h1>
+    <p>Manage your teams, projects, and tasks efficiently and beautifully.</p>
+    <div class="hero-actions">
+      <button mat-raised-button color="primary" routerLink="/projects">View Projects</button>
+      <button mat-stroked-button color="accent" routerLink="/tasks">My Tasks</button>
+    </div>
+  </div>
+
+  <div class="features-grid">
+    <mat-card class="feature-card">
+      <mat-card-header>
+        <div mat-card-avatar><mat-icon color="primary">group</mat-icon></div>
+        <mat-card-title>Teams</mat-card-title>
+        <mat-card-subtitle>Collaborate with others</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          Organize your workforce into effective teams. Add members, manage roles, and streamline communication.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="/teams">MANAGE TEAMS</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-card-header>
+        <div mat-card-avatar><mat-icon color="warn">assignment</mat-icon></div>
+        <mat-card-title>Projects</mat-card-title>
+        <mat-card-subtitle>Track progress</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          Create projects, assign tasks, and monitor progress. Keep your goals in sight and deadlines in check.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="/projects">VIEW PROJECTS</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-card-header>
+        <div mat-card-avatar><mat-icon color="accent">check_circle</mat-icon></div>
+        <mat-card-title>Tasks</mat-card-title>
+        <mat-card-subtitle>Get things done</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          Detailed task management with priorities, due dates, and status updates. Never miss a beat.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="/tasks">GO TO TASKS</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

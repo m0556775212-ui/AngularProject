@@ -1,0 +1,169 @@
+<div class="tasks-container">
+  <div class="header-section">
+      <div class="title-group">
+          <h1>Tasks Board</h1>
+          <p class="subtitle">Manage project tasks by status</p>
+      </div>
+      <div class="controls-group">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Filter by Project</mat-label>
+          <mat-select [ngModel]="selectedProjectId()" (selectionChange)="onProjectFilterChange($event.value)">
+            <mat-option [value]="''">All Projects</mat-option>
+            @for (project of projects(); track project._id) {
+              <mat-option [value]="project._id">{{ project.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <button mat-flat-button color="primary" routerLink="/add-task">
+            <mat-icon>add</mat-icon> New Task
+        </button>
+      </div>
+  </div>
+
+  @if (tasks().length === 0) {
+      <div class="no-tasks">
+          <mat-icon>assignment_late</mat-icon>
+          <h2>No tasks found</h2>
+          <p>Get started by creating a new task.</p>
+          <button mat-stroked-button color="primary" routerLink="/add-task">Create Task</button>
+      </div>
+  } @else {
+      <div class="kanban-board">
+        <div class="kanban-column">
+          <div class="column-header status-pending">
+            <h2>To Do</h2>
+            <span class="count">{{ getTasksByStatus('Pending').length }}</span>
+          </div>
+          <div class="column-content">
+            @for (task of getTasksByStatus('Pending'); track task.id) {
+              <mat-card class="task-card">
+                <mat-card-header>
+                  <mat-card-title>{{ task.title }}</mat-card-title>
+                  <mat-card-subtitle>
+                    <span class="priority-label" [class]="task.priority.toLowerCase()">{{ task.priority }}</span>
+                  </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p class="description">{{ task.description }}</p>
+                  <mat-divider></mat-divider>
+                  <div class="meta-info">
+                    <div class="due-date" *ngIf="task.due_date">
+                      <mat-icon>calendar_today</mat-icon> 
+                      {{ task.due_date | date:'mediumDate' }}
+                    </div>
+                  </div>
+                </mat-card-content>
+                <mat-card-actions align="end">
+                  <button mat-icon-button color="primary" [routerLink]="['/comments', task.id]" matTooltip="View Comments">
+                    <mat-icon>chat</mat-icon>
+                  </button>
+                  <button mat-icon-button [routerLink]="['/add-comment', task.id]" matTooltip="Add Comment">
+                    <mat-icon>add_comment</mat-icon>
+                  </button>
+                  @if (canEdit(task)) {
+                    <button mat-icon-button color="primary" [routerLink]="['/update-task', task.id]" matTooltip="Edit Task">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  }
+                  <button mat-icon-button color="warn" [routerLink]="['/delete-task', task.id]" matTooltip="Delete Task">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            }
+          </div>
+        </div>
+
+        <div class="kanban-column">
+          <div class="column-header status-progress">
+             <h2>In Progress</h2>
+             <span class="count">{{ getTasksByStatus('In Progress').length }}</span>
+          </div>
+          <div class="column-content">
+            @for (task of getTasksByStatus('In Progress'); track task.id) {
+              <mat-card class="task-card">
+                <mat-card-header>
+                  <mat-card-title>{{ task.title }}</mat-card-title>
+                   <mat-card-subtitle>
+                    <span class="priority-label" [class]="task.priority.toLowerCase()">{{ task.priority }}</span>
+                  </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p class="description">{{ task.description }}</p>
+                  <mat-divider></mat-divider>
+                  <div class="meta-info">
+                    <div class="due-date" *ngIf="task.due_date">
+                      <mat-icon>calendar_today</mat-icon> 
+                      {{ task.due_date | date:'mediumDate' }}
+                    </div>
+                  </div>
+                </mat-card-content>
+                 <mat-card-actions align="end">
+                  <button mat-icon-button color="primary" [routerLink]="['/comments', task.id]" matTooltip="View Comments">
+                    <mat-icon>chat</mat-icon>
+                  </button>
+                  <button mat-icon-button [routerLink]="['/add-comment', task.id]" matTooltip="Add Comment">
+                    <mat-icon>add_comment</mat-icon>
+                  </button>
+                  @if (canEdit(task)) {
+                    <button mat-icon-button color="primary" [routerLink]="['/update-task', task.id]" matTooltip="Edit Task">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  }
+                  <button mat-icon-button color="warn" [routerLink]="['/delete-task', task.id]" matTooltip="Delete Task">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            }
+          </div>
+        </div>
+
+        <div class="kanban-column">
+          <div class="column-header status-completed">
+             <h2>Completed</h2>
+             <span class="count">{{ getTasksByStatus('Completed').length }}</span>
+          </div>
+           <div class="column-content">
+            @for (task of getTasksByStatus('Completed'); track task.id) {
+              <mat-card class="task-card done-card">
+                <mat-card-header>
+                  <mat-card-title>{{ task.title }}</mat-card-title>
+                   <mat-card-subtitle>
+                    <span class="priority-label" [class]="task.priority.toLowerCase()">{{ task.priority }}</span>
+                  </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p class="description">{{ task.description }}</p>
+                  <mat-divider></mat-divider>
+                   <div class="meta-info">
+                    <div class="due-date" *ngIf="task.due_date">
+                      <mat-icon>calendar_today</mat-icon> 
+                      {{ task.due_date | date:'mediumDate' }}
+                    </div>
+                  </div>
+                </mat-card-content>
+                 <mat-card-actions align="end">
+                  <button mat-icon-button color="primary" [routerLink]="['/comments', task.id]" matTooltip="View Comments">
+                    <mat-icon>chat</mat-icon>
+                  </button>
+                  <button mat-icon-button [routerLink]="['/add-comment', task.id]" matTooltip="Add Comment">
+                    <mat-icon>add_comment</mat-icon>
+                  </button>
+                  @if (canEdit(task)) {
+                    <button mat-icon-button color="primary" [routerLink]="['/update-task', task.id]" matTooltip="Edit Task">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  }
+                  <button mat-icon-button color="warn" [routerLink]="['/delete-task', task.id]" matTooltip="Delete Task">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            }
+          </div>
+        </div>
+
+      </div>
+  }
+</div>

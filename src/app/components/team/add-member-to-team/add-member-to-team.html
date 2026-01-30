@@ -1,0 +1,29 @@
+<div class="form-container">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>Add Member to Team</mat-card-title>
+      <mat-card-subtitle>Select a user to join the team</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="memberForm" (ngSubmit)="addMemberToTeam()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select Member</mat-label>
+          <mat-select id="userId" formControlName="userId">
+            <mat-option value="" disabled>-- Select a User --</mat-option>
+            @for (user of users(); track user.id) {
+              <mat-option [value]="user.id">{{ user.name }} ({{user.email}})</mat-option>
+            }
+          </mat-select>
+          <mat-error *ngIf="memberForm.get('userId')?.invalid">Please select a user</mat-error>
+        </mat-form-field>
+
+        <div class="actions">
+          <button mat-button type="button" routerLink="/teams">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="memberForm.invalid || isLoading()">
+            {{ isLoading() ? 'Adding...' : 'Add Member' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
